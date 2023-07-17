@@ -3,6 +3,7 @@ const app = express();
 
 const cors = require("cors");
 const pool = require("./db");
+const queries = require("./queries");
 
 //middleware
 app.use(cors());
@@ -16,8 +17,7 @@ app.post("/todos", async (req, res) => {
   try {
     // console.log(req.body);
     const { description } = req.body;
-    const newTodo = await pool.query(
-      "INSERT INTO todo (description) VALUES($1) RETURNING *",
+    const newTodo = await pool.query(queries.createTodo,
       [description]
     );
 
